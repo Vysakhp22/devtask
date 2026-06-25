@@ -1,2 +1,60 @@
 /* You can add global styles to this file, and also import other style files */
 @use "tailwindcss";
+
+@plugin "daisyui" {
+    themes: light --default;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* ── DevTask custom theme ─────────────────────────────────────────────────── */
+@plugin "daisyui/theme" {
+    name: "devtask";
+    default: true;
+    color-scheme: light;
+
+    /* Page / surface */
+    --color-base-100: oklch(97.8% 0.005 95);
+    /* #F8F7F5 warm off-white */
+    --color-base-200: oklch(95.5% 0.003 255);
+    /* #F3F4F6 */
+    --color-base-300: oklch(91.8% 0.003 255);
+    /* #E5E7EB border */
+    --color-base-content: oklch(13.5% 0.03 267);
+    /* #1A1A2E */
+
+    /* Primary — violet */
+    --color-primary: oklch(54% 0.22 283);
+    /* #6B5CE7 */
+    --color-primary-content: oklch(100% 0 0);
+
+    /* Neutral */
+    --color-neutral: oklch(49.5% 0.016 255);
+    /* #6B7280 */
+    --color-neutral-content: oklch(97% 0 0);
+
+    /* Semantic */
+    --color-error: oklch(57.8% 0.22 27);
+    /* #EF4444 */
+    --color-error-content: oklch(100% 0 0);
+    --color-success: oklch(59.1% 0.17 142);
+    /* #22C55E */
+    --color-success-content: oklch(100% 0 0);
+    --color-warning: oklch(72% 0.18 72);
+    /* #F59E0B */
+    --color-warning-content: oklch(20% 0.05 80);
+
+    /* Shape */
+    --radius-field: 0.5rem;
+    --radius-box: 0.75rem;
+    --radius-selector: 0.5rem;
+    --border: 1px;
+}
+
+*:focus,
+*:focus-within {
+    outline: none !important;
+    box-shadow: none !important;
+}
