@@ -1,0 +1,52 @@
+// Left panel background
+.panel-left {
+  background: linear-gradient(135deg, #13111C 0%, #1E1A3A 50%, #0F172A 100%);
+}
+
+// Decorative blobs
+.blob-1 {
+  background: radial-gradient(circle, #9f7aea 0%, transparent 70%);
+}
+
+.blob-2 {
+  background: radial-gradient(circle, #6b5ce7 0%, transparent 70%);
+}
+
+.blob-3 {
+  background: radial-gradient(circle, #a78bfa 0%, transparent 70%);
+}
+
+// Gradient headline text
+.text-gradient {
+  background: linear-gradient(90deg, #a78bfa, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Feature check icon wrapper
+.feature-icon {
+  background: rgba(109, 92, 231, 0.2);
+  border: 1px solid rgba(109, 92, 231, 0.4);
+}
+
+// Mini dashboard card
+.dashboard-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+// Progress bar track
+.progress-track {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+// Progress bar fill
+.progress-fill {
+  background: linear-gradient(90deg, #7c3aed, #a78bfa);
+
+  &--85 { width: 85%; }
+  &--60 { width: 60%; }
+  &--40 { width: 40%; }
+}
