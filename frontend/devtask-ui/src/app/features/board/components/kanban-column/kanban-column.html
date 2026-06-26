@@ -1,0 +1,47 @@
+<section class="kanban-column" [attr.aria-label]="title() + ' column'">
+
+  <!-- Column header -->
+  <header class="kanban-column__header">
+    <span class="kanban-column__title">{{ title() }}</span>
+    <span class="kanban-column__badge" [attr.aria-label]="tasks().length + ' tasks'">
+      {{ tasks().length }}
+    </span>
+  </header>
+
+  <!-- Scrollable body: skeletons / cards / empty state -->
+  <div class="kanban-column__body">
+
+    <!-- Loading skeleton -->
+    @if (isLoading()) {
+      @for (item of skeletonItems; track item) {
+        <div class="kanban-column__skeleton" aria-hidden="true">
+          <div class="kanban-column__skeleton-bar kanban-column__skeleton-bar--short"></div>
+          <div class="kanban-column__skeleton-bar kanban-column__skeleton-bar--long"></div>
+          <div class="kanban-column__skeleton-bar kanban-column__skeleton-bar--medium"></div>
+        </div>
+      }
+    }
+
+    <!-- Task cards -->
+    @if (!isLoading()) {
+      @if (tasks().length > 0) {
+        <div class="kanban-column__cards">
+          @for (task of tasks(); track task.id) {
+            <app-task-card [task]="task" />
+          }
+        </div>
+      } @else {
+        <!-- Empty state -->
+        <div class="kanban-column__empty" role="status" aria-live="polite">
+          <p class="kanban-column__empty-text">No tasks here</p>
+          <button type="button" class="kanban-column__add-link" aria-label="Add a task to {{ title() }}">
+            <ng-icon name="heroPlus" size="12" aria-hidden="true" />
+            Add task
+          </button>
+        </div>
+      }
+    }
+
+  </div>
+
+</section>

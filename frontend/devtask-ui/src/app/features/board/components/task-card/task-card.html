@@ -1,0 +1,45 @@
+<article
+  class="task-card"
+  [class.task-card--overdue]="isDeadlineOverdue()"
+  tabindex="0"
+  [attr.aria-label]="'Task: ' + task().title">
+
+  <!-- Drag handle (visible on card hover via CSS) -->
+  <!-- <span class="task-card__drag-handle" aria-hidden="true">⠿</span> -->
+
+  <!-- Row 1: Priority badge + optional deadline -->
+  <div class="task-card__meta">
+    <span
+      class="task-card__priority"
+      [class.task-card__priority--high]="task().priority === 'high'"
+      [class.task-card__priority--medium]="task().priority === 'medium'"
+      [class.task-card__priority--low]="task().priority === 'low'">
+      {{ task().priority | titlecase }}
+    </span>
+
+    @if (task().deadline) {
+      <span
+        class="task-card__deadline"
+        [class.task-card__deadline--overdue]="isDeadlineOverdue()">
+        <ng-icon name="heroClock" size="12" aria-hidden="true" />
+        {{ formatDeadline(task().deadline!) }}
+      </span>
+    }
+  </div>
+
+  <!-- Row 2: Task title -->
+  <p class="task-card__title">{{ task().title }}</p>
+
+  <!-- Row 3: Tags (only if present) -->
+  @if ((task().tags?.length ?? 0) > 0) {
+    <div class="task-card__tags" aria-label="Tags">
+      @for (tag of visibleTags(); track tag) {
+        <span class="task-card__tag">{{ tag }}</span>
+      }
+      @if (extraTagCount() > 0) {
+        <span class="task-card__tag task-card__tag--extra">+{{ extraTagCount() }} more</span>
+      }
+    </div>
+  }
+
+</article>
