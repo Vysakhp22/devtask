@@ -1,8 +1,11 @@
 import { Component, signal } from '@angular/core';
+import { form, FormField, FormRoot, required } from '@angular/forms/signals';
+import { LoginModel } from '../../../../core/model/auth.model';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.html',
+  imports: [FormField, FormRoot],
   styleUrl: './login.scss',
 })
 export class Login {
@@ -16,8 +19,29 @@ export class Login {
   forgotPasswordSent = signal(false);
   showErrorBanner = signal(false);
 
+  loginModel = signal<LoginModel>({
+    email: '',
+    password: '',
+  });
+
+  loginForm = form(
+    this.loginModel,
+    (schemaPath) => {
+      required(schemaPath.email, { message: 'Email is required' });
+      required(schemaPath.password, { message: 'Password is required' });
+    },
+    {
+      submission: {
+        action: async (field) => {
+          const result = await this.loginSubmit(field().value());
+          if (result) return;
+        },
+      },
+    },
+  );
+
   togglePassword(): void {
-    this.showPassword.update(v => !v);
+    this.showPassword.update((v) => !v);
   }
 
   onForgotPassword(): void {
@@ -26,5 +50,13 @@ export class Login {
 
   dismissError(): void {
     this.showErrorBanner.set(false);
+  }
+
+  async loginSubmit(data: LoginModel): Promise<boolean> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(true);
+      }, 3000);
+    });
   }
 }
