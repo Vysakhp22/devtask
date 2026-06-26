@@ -1,0 +1,144 @@
+// Host must stretch to the full grid cell height
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.kanban-column {
+  // Fill the grid cell from top to bottom
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+
+  // ── Header ─────────────────────────────────────────────────────────────────
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  &__title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    letter-spacing: 0.01em;
+  }
+
+  &__badge {
+    font-size: 11px;
+    font-weight: 500;
+    color: #6b7280;
+    background: #e5e7eb;
+    border-radius: 99px;
+    padding: 2px 8px;
+    line-height: 1.4;
+    min-width: 22px;
+    text-align: center;
+  }
+
+  // ── Scrollable body (cards / skeleton / empty) ──────────────────────
+  &__body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-bottom: 4px;
+
+    // subtle custom scrollbar
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db transparent;
+  }
+
+  // ── Task cards list ───────────────────────────────────────────
+  &__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  // ── Empty state ─────────────────────────────────────────────────────────────
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    border: 1.5px dashed #d1d5db;
+    border-radius: 8px;
+    gap: 6px;
+  }
+
+  &__empty-text {
+    font-size: 13px;
+    color: #9ca3af;
+    margin: 0;
+  }
+
+  &__add-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 12px;
+    color: #6b5ce7;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #6b5ce7;
+      border-radius: 2px;
+    }
+  }
+
+  // ── Loading skeleton cards ──────────────────────────────────────────────────
+  &__skeleton {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 8px;
+    animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  &__skeleton-bar {
+    background: #e5e7eb;
+    border-radius: 6px;
+    height: 12px;
+
+    &--short {
+      width: 30%;
+    }
+
+    &--medium {
+      width: 55%;
+    }
+
+    &--long {
+      width: 85%;
+    }
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

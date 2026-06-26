@@ -1,0 +1,89 @@
+<div class="board">
+
+  <!-- ── Page header ─────────────────────────────────────────────────────── -->
+  <header class="board__header">
+    <h1 class="board__title">Board</h1>
+    <button type="button" class="board__new-task-btn" aria-label="Create new task">
+      <ng-icon name="heroPlus" size="16" aria-hidden="true" />
+      New task
+    </button>
+  </header>
+
+  <!-- ── Sprint stats ────────────────────────────────────────────────────── -->
+  <section class="board__stats" aria-label="Sprint statistics">
+    <div class="stat-card">
+      <p class="stat-card__label">Total tasks</p>
+      <span class="stat-card__value">{{ totalCount() }}</span>
+    </div>
+
+    <div class="stat-card">
+      <p class="stat-card__label">In progress</p>
+      <span class="stat-card__value stat-card__value--blue">{{ inProgressCount() }}</span>
+    </div>
+
+    <div class="stat-card">
+      <p class="stat-card__label">Completed</p>
+      <span class="stat-card__value stat-card__value--green">{{ doneCount() }}</span>
+    </div>
+
+    <div class="stat-card">
+      <p class="stat-card__label">Sprint progress</p>
+      <span class="stat-card__value stat-card__value--violet">{{ sprintProgress() }}%</span>
+      <div class="stat-card__progress-track" role="progressbar"
+        [attr.aria-valuenow]="sprintProgress()"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        [attr.aria-label]="'Sprint progress: ' + sprintProgress() + '%'">
+        <div class="stat-card__progress-fill" [style.width.%]="sprintProgress()"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Search & filter ─────────────────────────────────────────────────── -->
+  <div class="board__toolbar" role="search">
+    <label class="board__search-wrap" for="task-search">
+      <ng-icon name="heroMagnifyingGlass" size="16" class="board__search-icon" aria-hidden="true" />
+      <input
+        id="task-search"
+        type="search"
+        class="board__search-input"
+        placeholder="Search tasks…"
+        [value]="searchQuery()"
+        (input)="onSearchInput($event)"
+        aria-label="Search tasks" />
+    </label>
+
+    <button
+      type="button"
+      class="board__filter-btn"
+      disabled
+      aria-disabled="true"
+      title="Filters coming soon">
+      <ng-icon name="heroFunnel" size="15" aria-hidden="true" />
+      Filter
+    </button>
+  </div>
+
+  <!-- ── Kanban columns ──────────────────────────────────────────────────── -->
+  <div class="board__columns" aria-label="Kanban board">
+    <app-kanban-column
+      title="To do"
+      status="todo"
+      [tasks]="todoTasks()"
+      [isLoading]="isLoading()" />
+
+    <app-kanban-column
+      title="In progress"
+      status="inprogress"
+      [tasks]="inProgressTasks()"
+      [isLoading]="isLoading()" />
+
+    <app-kanban-column
+      title="Done"
+      status="done"
+      [tasks]="doneTasks()"
+      [isLoading]="isLoading()" />
+  </div>
+
+</div>
+
