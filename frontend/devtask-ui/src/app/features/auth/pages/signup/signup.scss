@@ -1,0 +1,55 @@
+// Left panel background
+.panel-left {
+  background: linear-gradient(135deg, #13111c 0%, #1e1a3a 50%, #0f172a 100%);
+}
+
+// Decorative blobs
+.blob-1 {
+  background: radial-gradient(circle, #9f7aea 0%, transparent 70%);
+}
+
+.blob-2 {
+  background: radial-gradient(circle, #6b5ce7 0%, transparent 70%);
+}
+
+.blob-3 {
+  background: radial-gradient(circle, #a78bfa 0%, transparent 70%);
+}
+
+// Gradient headline text
+.text-gradient {
+  background: linear-gradient(90deg, #a78bfa, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Feature check icon wrapper
+.feature-icon {
+  background: rgba(109, 92, 231, 0.2);
+  border: 1px solid rgba(109, 92, 231, 0.4);
+}
+
+// Get started steps card
+.steps-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+// Step number badge
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: rgba(109, 92, 231, 0.25);
+  border: 1px solid rgba(167, 139, 250, 0.45);
+  color: #a78bfa;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1;
+}

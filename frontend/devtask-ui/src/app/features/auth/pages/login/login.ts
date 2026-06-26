@@ -1,11 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { form, FormField, FormRoot, required } from '@angular/forms/signals';
+import { RouterLink } from '@angular/router';
 import { LoginModel } from '@app/core/model/auth.model';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.html',
-  imports: [FormField, FormRoot],
+  imports: [FormField, FormRoot, RouterLink],
   styleUrl: './login.scss',
 })
 export class Login {
