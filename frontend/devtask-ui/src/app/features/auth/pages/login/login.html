@@ -127,13 +127,18 @@
                 </div>
                 }
 
-                <form class="space-y-5" novalidate aria-label="Sign in form">
+                <form class="space-y-5" novalidate aria-label="Sign in form" [formRoot]="loginForm">
 
                     <!-- Email -->
                     <div class="space-y-1.5">
                         <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
-                        <input id="email" type="email" name="email" autocomplete="email" placeholder="you@example.com"
-                            class="input w-full bg-white border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 focus:outline-none transition-all" />
+                        <input [formField]="loginForm.email" id="email" type="email" autocomplete="email"
+                            placeholder="you@example.com"
+                            class="input w-full bg-white border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 focus:outline-none transition-all"
+                            [class.border-red-400]="loginForm.email().touched() && loginForm.email().invalid()" />
+                        @if (loginForm.email().touched() && loginForm.email().errors().length) {
+                            <p class="text-xs text-red-500 mt-1">{{ loginForm.email().errors()[0].message }}</p>
+                        }
                     </div>
 
                     <!-- Password -->
@@ -149,9 +154,11 @@
                         </div>
 
                         <div class="relative">
-                            <input id="password" [type]="showPassword() ? 'text' : 'password'" name="password"
-                                autocomplete="current-password" placeholder="••••••••"
-                                class="input w-full pr-10 bg-white border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 focus:outline-none transition-all" />
+                            <input [formField]="loginForm.password" id="password"
+                                [type]="showPassword() ? 'text' : 'password'" autocomplete="current-password"
+                                placeholder="••••••••"
+                                class="input w-full pr-10 bg-white border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 focus:outline-none transition-all"
+                                [class.border-red-400]="loginForm.password().touched() && loginForm.password().invalid()" />
                             <button type="button" (click)="togglePassword()"
                                 [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
                                 class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors focus:outline-none">
@@ -179,6 +186,10 @@
                             </button>
                         </div>
 
+                        @if (loginForm.password().touched() && loginForm.password().errors().length) {
+                            <p class="text-xs text-red-500 mt-1">{{ loginForm.password().errors()[0].message }}</p>
+                        }
+
                         @if (forgotPasswordSent()) {
                         <div role="status"
                             class="flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 rounded-lg px-3 py-2.5 text-sm">
@@ -192,8 +203,21 @@
                         }
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-full h-11 text-sm font-medium">
+                    <button type="submit"
+                        class="btn btn-primary w-full h-11 text-sm font-medium flex items-center justify-center gap-2"
+                        [class.pointer-events-none]="loginForm().submitting()">
+                        @if (loginForm().submitting()) {
+                        <svg class="animate-spin h-4 w-4 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                        </svg>
+                        Signing in...
+                        } @else {
                         Sign in
+                        }
                     </button>
 
                     <div class="divider text-xs text-gray-400 my-0">or</div>
