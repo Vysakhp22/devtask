@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { form, FormField, FormRoot, required } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
-import { LoginModel } from '@app/core/model/auth.model';
+import { ILoginModel } from '@app/core/model/auth.model';
 
 @Component({
   selector: 'app-login',
@@ -16,16 +16,16 @@ export class Login {
     'Deploy to AWS in one push',
   ];
 
-  showPassword = signal(false);
-  forgotPasswordSent = signal(false);
-  showErrorBanner = signal(false);
+  protected showPassword = signal(false);
+  protected forgotPasswordSent = signal(false);
+  protected showErrorBanner = signal(false);
 
-  loginModel = signal<LoginModel>({
+  private loginModel = signal<ILoginModel>({
     email: '',
     password: '',
   });
 
-  loginForm = form(
+  protected loginForm = form(
     this.loginModel,
     (schemaPath) => {
       required(schemaPath.email, { message: 'Email is required' });
@@ -41,19 +41,19 @@ export class Login {
     },
   );
 
-  togglePassword(): void {
+  protected togglePassword(): void {
     this.showPassword.update((v) => !v);
   }
 
-  onForgotPassword(): void {
+  protected onForgotPassword(): void {
     this.forgotPasswordSent.set(true);
   }
 
-  dismissError(): void {
+  protected dismissError(): void {
     this.showErrorBanner.set(false);
   }
 
-  async loginSubmit(data: LoginModel): Promise<boolean> {
+  protected async loginSubmit(data: ILoginModel): Promise<boolean> {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(true);
