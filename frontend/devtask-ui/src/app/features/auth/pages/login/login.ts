@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { form, FormField, FormRoot, required } from '@angular/forms/signals';
-import { LoginModel } from '../../../../core/model/auth.model';
+import { LoginModel } from '@app/core/model/auth.model';
 
 @Component({
   selector: 'app-login',
