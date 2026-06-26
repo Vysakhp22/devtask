@@ -1,222 +1,295 @@
-<div class="flex min-h-screen">
+<div class="flex h-screen overflow-hidden">
 
-  <!-- Left panel (desktop only) -->
-  <aside
-    class="panel-left hidden md:flex md:w-[45%] flex-col justify-between shrink-0 relative overflow-hidden"
-    aria-hidden="true"
-  >
+    <!-- Left panel (desktop only) -->
+    <aside class="panel-left hidden md:flex md:w-[45%] flex-col justify-between shrink-0 relative overflow-hidden"
+        aria-hidden="true">
 
-    <!-- Decorative blobs -->
-    <div class="absolute inset-0 pointer-events-none">
-      <div class="blob-1 absolute -top-24 -left-24 w-96 h-96 rounded-full opacity-20"></div>
-      <div class="blob-2 absolute top-1/2 -right-32 w-80 h-80 rounded-full opacity-15"></div>
-      <div class="blob-3 absolute -bottom-20 left-1/4 w-72 h-72 rounded-full opacity-10"></div>
-      <svg class="absolute inset-0 w-full h-full opacity-[0.04]" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern id="grid-signup" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#grid-signup)" />
-      </svg>
-    </div>
-
-    <!-- Top: logo -->
-    <div class="relative z-10 px-12 pt-10">
-      <div class="flex items-center gap-3">
-        <div
-          class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/40"
-        >
-          <svg width="20" height="20" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-            <rect x="3" y="3" width="7" height="7" rx="1.5" fill="white" opacity="0.9" />
-            <rect x="12" y="3" width="7" height="7" rx="1.5" fill="white" opacity="0.45" />
-            <rect x="3" y="12" width="7" height="7" rx="1.5" fill="white" opacity="0.45" />
-            <rect x="12" y="12" width="7" height="7" rx="1.5" fill="white" opacity="0.75" />
-          </svg>
+        <!-- Decorative blobs -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="blob-1 absolute -top-24 -left-24 w-96 h-96 rounded-full opacity-20"></div>
+            <div class="blob-2 absolute top-1/2 -right-32 w-80 h-80 rounded-full opacity-15"></div>
+            <div class="blob-3 absolute -bottom-20 left-1/4 w-72 h-72 rounded-full opacity-10"></div>
+            <svg class="absolute inset-0 w-full h-full opacity-[0.04]" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="grid-signup" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1" />
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid-signup)" />
+            </svg>
         </div>
-        <span class="text-white text-xl font-semibold tracking-tight">DevTask</span>
-      </div>
-    </div>
 
-    <!-- Center: headline + features + steps -->
-    <div class="relative z-10 px-12 flex flex-col gap-7">
+        <!-- Top: logo -->
+        <div class="relative z-10 px-12 pt-10">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/40">
+                    <svg width="20" height="20" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+                        <rect x="3" y="3" width="7" height="7" rx="1.5" fill="white" opacity="0.9" />
+                        <rect x="12" y="3" width="7" height="7" rx="1.5" fill="white" opacity="0.45" />
+                        <rect x="3" y="12" width="7" height="7" rx="1.5" fill="white" opacity="0.45" />
+                        <rect x="12" y="12" width="7" height="7" rx="1.5" fill="white" opacity="0.75" />
+                    </svg>
+                </div>
+                <span class="text-white text-xl font-semibold tracking-tight">DevTask</span>
+            </div>
+        </div>
 
-      <div>
-        <h2 class="text-4xl font-bold text-white leading-tight mb-3">
-          Ship faster.<br />
-          <span class="text-gradient">Stay in flow.</span>
-        </h2>
-        <p class="text-gray-400 text-sm leading-relaxed">
-          Your personal sprint tracker designed<br />for solo devs and small teams.
-        </p>
-      </div>
+        <!-- Center: headline + features + steps -->
+        <div class="relative z-10 px-12 flex flex-col gap-7">
 
-      <ul class="space-y-3">
-        <li class="flex items-center gap-3">
-          <div class="feature-icon w-6 h-6 rounded-full flex items-center justify-center shrink-0">
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-              <path d="M2 6L4.5 8.5L10 3.5" stroke="#A78BFA" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </div>
-          <span class="text-gray-300 text-sm">Kanban board with drag-and-drop</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <div class="feature-icon w-6 h-6 rounded-full flex items-center justify-center shrink-0">
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-              <path d="M2 6L4.5 8.5L10 3.5" stroke="#A78BFA" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </div>
-          <span class="text-gray-300 text-sm">Sprint burndown tracking</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <div class="feature-icon w-6 h-6 rounded-full flex items-center justify-center shrink-0">
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-              <path d="M2 6L4.5 8.5L10 3.5" stroke="#A78BFA" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </div>
-          <span class="text-gray-300 text-sm">Deploy to AWS in one push</span>
-        </li>
-      </ul>
-
-      <!-- Get started steps card -->
-      <div class="steps-card rounded-2xl p-4">
-        <p class="text-xs text-gray-500 mb-4 uppercase tracking-widest font-medium">Get started in 3 steps</p>
-        <ol class="space-y-4">
-          <li class="flex items-start gap-3">
-            <span class="step-number" aria-hidden="true">1</span>
             <div>
-              <p class="text-sm text-white font-medium">Create your account</p>
-              <p class="text-xs text-gray-500 mt-0.5">Takes 30 seconds, no credit card</p>
+                <h2 class="text-4xl font-bold text-white leading-tight mb-3">
+                    Ship faster.<br />
+                    <span class="text-gradient">Stay in flow.</span>
+                </h2>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Your personal sprint tracker designed<br />for solo devs and small teams.
+                </p>
             </div>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="step-number" aria-hidden="true">2</span>
-            <div>
-              <p class="text-sm text-white font-medium">Add your tasks</p>
-              <p class="text-xs text-gray-500 mt-0.5">Import or start fresh on your board</p>
+
+            <ul class="space-y-3">
+                <li class="flex items-center gap-3">
+                    <div class="feature-icon w-6 h-6 rounded-full flex items-center justify-center shrink-0">
+                        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                            <path d="M2 6L4.5 8.5L10 3.5" stroke="#A78BFA" stroke-width="1.75" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <span class="text-gray-300 text-sm">Kanban board with drag-and-drop</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <div class="feature-icon w-6 h-6 rounded-full flex items-center justify-center shrink-0">
+                        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                            <path d="M2 6L4.5 8.5L10 3.5" stroke="#A78BFA" stroke-width="1.75" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <span class="text-gray-300 text-sm">Sprint burndown tracking</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <div class="feature-icon w-6 h-6 rounded-full flex items-center justify-center shrink-0">
+                        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                            <path d="M2 6L4.5 8.5L10 3.5" stroke="#A78BFA" stroke-width="1.75" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <span class="text-gray-300 text-sm">Deploy to AWS in one push</span>
+                </li>
+            </ul>
+
+            <!-- Get started steps card -->
+            <div class="steps-card rounded-2xl p-4">
+                <p class="text-xs text-gray-500 mb-4 uppercase tracking-widest font-medium">Get started in 3 steps</p>
+                <ol class="space-y-4">
+                    <li class="flex items-start gap-3">
+                        <span class="step-number" aria-hidden="true">1</span>
+                        <div>
+                            <p class="text-sm text-white font-medium">Create your account</p>
+                            <p class="text-xs text-gray-500 mt-0.5">Takes 30 seconds, no credit card</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="step-number" aria-hidden="true">2</span>
+                        <div>
+                            <p class="text-sm text-white font-medium">Add your tasks</p>
+                            <p class="text-xs text-gray-500 mt-0.5">Import or start fresh on your board</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="step-number" aria-hidden="true">3</span>
+                        <div>
+                            <p class="text-sm text-white font-medium">Track your sprint</p>
+                            <p class="text-xs text-gray-500 mt-0.5">Watch the burndown chart update live</p>
+                        </div>
+                    </li>
+                </ol>
             </div>
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="step-number" aria-hidden="true">3</span>
-            <div>
-              <p class="text-sm text-white font-medium">Track your sprint</p>
-              <p class="text-xs text-gray-500 mt-0.5">Watch the burndown chart update live</p>
+
+        </div>
+
+        <!-- Bottom tagline -->
+        <div class="relative z-10 px-12 pb-10">
+            <p class="text-xs text-gray-600">&copy; 2026 DevTask. Built for builders.</p>
+        </div>
+
+    </aside>
+
+    <!-- Right panel -->
+    <main class="flex-1 flex items-center justify-center px-6 py-10 bg-[#F0EFF9] overflow-y-auto">
+        <div class="w-full max-w-sm">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 px-8 py-10">
+
+                <h1 class="text-[28px] font-bold text-gray-900 mb-1">Create your account</h1>
+                <p class="text-sm text-gray-500 mb-8">Start tracking your sprints in minutes</p>
+
+                <form class="space-y-5" novalidate aria-label="Sign up form" [formRoot]="signupForm">
+
+                    <!-- Name row -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="space-y-1.5">
+                            <label for="firstName" class="block text-sm font-medium text-gray-700">First name</label>
+                            <input [formField]="signupForm.firstName" id="firstName" type="text"
+                                autocomplete="given-name" placeholder="Vysakh"
+                                class="input w-full bg-white border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 focus:outline-none transition-all"
+                                [class.border-red-400]="signupForm.firstName().touched() && signupForm.firstName().invalid()" />
+                            @if (signupForm.firstName().touched() && signupForm.firstName().errors().length) {
+                            <p class="text-xs text-red-500 mt-1">{{ signupForm.firstName().errors()[0].message }}</p>
+                            }
+                        </div>
+                        <div class="space-y-1.5">
+                            <label for="lastName" class="block text-sm font-medium text-gray-700">Last name</label>
+                            <input [formField]="signupForm.lastName" id="lastName" type="text"
+                                autocomplete="family-name" placeholder="Ajith"
+                                class="input w-full bg-white border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 focus:outline-none transition-all"
+                                [class.border-red-400]="signupForm.lastName().touched() && signupForm.lastName().invalid()" />
+                            @if (signupForm.lastName().touched() && signupForm.lastName().errors().length) {
+                            <p class="text-xs text-red-500 mt-1">{{ signupForm.lastName().errors()[0].message }}</p>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="space-y-1.5">
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+                        <input [formField]="signupForm.email" id="email" type="email" autocomplete="email"
+                            placeholder="you&#64;example.com"
+                            class="input w-full bg-white border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 focus:outline-none transition-all"
+                            [class.border-red-400]="signupForm.email().touched() && signupForm.email().invalid()" />
+                        @if (signupForm.email().touched() && signupForm.email().errors().length) {
+                        <p class="text-xs text-red-500 mt-1">{{ signupForm.email().errors()[0].message }}</p>
+                        }
+                    </div>
+
+                    <!-- Password -->
+                    <div class="space-y-1.5">
+                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <div class="relative">
+                            <input [formField]="signupForm.password" id="password"
+                                [type]="showPassword() ? 'text' : 'password'" autocomplete="new-password"
+                                placeholder="Min 8 characters"
+                                class="input w-full pr-10 bg-white border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 focus:outline-none transition-all"
+                                [class.border-red-400]="signupForm.password().touched() && signupForm.password().invalid()" />
+                            <button type="button" (click)="togglePassword()"
+                                [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors focus:outline-none">
+                                @if (showPassword()) {
+                                <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"
+                                        stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"
+                                        stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24" stroke="currentColor" stroke-width="1.75"
+                                        stroke-linecap="round" />
+                                    <path d="M3 3l18 18" stroke="currentColor" stroke-width="1.75"
+                                        stroke-linecap="round" />
+                                </svg>
+                                } @else {
+                                <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor"
+                                        stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.75" />
+                                </svg>
+                                }
+                            </button>
+                        </div>
+                        @if (signupForm.password().touched() && signupForm.password().errors().length) {
+                        <p class="text-xs text-red-500 mt-1">{{ signupForm.password().errors()[0].message }}</p>
+                        } @else {
+                        <p class="text-xs text-gray-400">Use 8+ characters with a mix of letters and numbers</p>
+                        }
+                    </div>
+
+                    <!-- Confirm password -->
+                    <div class="space-y-1.5">
+                        <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm
+                            password</label>
+                        <div class="relative">
+                            <input [formField]="signupForm.confirmPassword" id="confirmPassword"
+                                [type]="showConfirmPassword() ? 'text' : 'password'" autocomplete="new-password"
+                                placeholder="Re-enter your password"
+                                class="input w-full pr-10 bg-white border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 focus:outline-none transition-all"
+                                [class.border-red-400]="signupForm.confirmPassword().touched() && signupForm.confirmPassword().invalid()" />
+                            <button type="button" (click)="toggleConfirmPassword()"
+                                [attr.aria-label]="showConfirmPassword() ? 'Hide confirm password' : 'Show confirm password'"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors focus:outline-none">
+                                @if (showConfirmPassword()) {
+                                <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"
+                                        stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"
+                                        stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24" stroke="currentColor" stroke-width="1.75"
+                                        stroke-linecap="round" />
+                                    <path d="M3 3l18 18" stroke="currentColor" stroke-width="1.75"
+                                        stroke-linecap="round" />
+                                </svg>
+                                } @else {
+                                <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor"
+                                        stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.75" />
+                                </svg>
+                                }
+                            </button>
+                        </div>
+                        @if (signupForm.confirmPassword().touched() && signupForm.confirmPassword().errors().length) {
+                        <p class="text-xs text-red-500 mt-1">{{ signupForm.confirmPassword().errors()[0].message }}</p>
+                        }
+                    </div>
+
+                    <!-- Terms -->
+                    <div class="space-y-1">
+                        <div class="flex items-start gap-3">
+                            <input [formField]="signupForm.terms" id="terms" type="checkbox"
+                                class="checkbox checkbox-primary checkbox-sm mt-0.5 shrink-0" />
+                            <label for="terms" class="text-sm text-gray-600 leading-relaxed">
+                                I agree to the
+                                <a href="#" class="text-primary hover:underline">Terms of Service</a>
+                                and
+                                <a href="#" class="text-primary hover:underline">Privacy Policy</a>
+                            </label>
+                        </div>
+                        @if (signupForm.terms().touched() && signupForm.terms().errors().length) {
+                        <p class="text-xs text-red-500 mt-1">{{ signupForm.terms().errors()[0].message }}</p>
+                        }
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit"
+                        class="btn btn-primary w-full h-11 text-sm font-medium flex items-center justify-center gap-2"
+                        [class.pointer-events-none]="signupForm().submitting()">
+                        @if (signupForm().submitting()) {
+                        <svg class="animate-spin h-4 w-4 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                        </svg>
+                        Creating account...
+                        } @else {
+                        Create account
+                        }
+                    </button>
+
+                </form>
+
+                <!-- Sign in link -->
+                <div class="divider my-6 text-xs text-gray-400">Already have an account?</div>
+
+                <a href="javascript:void(0)" [routerLink]="'/login'"
+                    class="btn btn-ghost w-full h-10 text-sm font-medium text-primary border border-primary/20 hover:bg-primary/5">
+                    Sign in instead &rarr;
+                </a>
+
             </div>
-          </li>
-        </ol>
-      </div>
-
-    </div>
-
-    <!-- Bottom tagline -->
-    <div class="relative z-10 px-12 pb-10">
-      <p class="text-xs text-gray-600">&copy; 2026 DevTask. Built for builders.</p>
-    </div>
-
-  </aside>
-
-  <!-- Right panel -->
-  <main class="flex-1 flex items-center justify-center px-6 py-10 bg-[#F0EFF9]">
-    <div class="w-full max-w-sm">
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 px-8 py-10">
-
-        <h1 class="text-[28px] font-bold text-gray-900 mb-1">Create your account</h1>
-        <p class="text-sm text-gray-500 mb-8">Start tracking your sprints in minutes</p>
-
-        <form class="space-y-5" novalidate aria-label="Sign up form">
-
-          <!-- Name row -->
-          <div class="grid grid-cols-2 gap-3">
-            <div class="space-y-1.5">
-              <label for="firstName" class="block text-sm font-medium text-gray-700">First name</label>
-              <input
-                id="firstName"
-                type="text"
-                autocomplete="given-name"
-                placeholder="Vysakh"
-                class="input w-full bg-white border-gray-200 focus:border-primary transition-all"
-              />
-            </div>
-            <div class="space-y-1.5">
-              <label for="lastName" class="block text-sm font-medium text-gray-700">Last name</label>
-              <input
-                id="lastName"
-                type="text"
-                autocomplete="family-name"
-                placeholder="Ajith"
-                class="input w-full bg-white border-gray-200 focus:border-primary transition-all"
-              />
-            </div>
-          </div>
-
-          <!-- Email -->
-          <div class="space-y-1.5">
-            <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
-            <input
-              id="email"
-              type="email"
-              autocomplete="email"
-              placeholder="you&#64;example.com"
-              class="input w-full bg-white border-gray-200 focus:border-primary transition-all"
-            />
-          </div>
-
-          <!-- Password -->
-          <div class="space-y-1.5">
-            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-            <input
-              id="password"
-              type="password"
-              autocomplete="new-password"
-              placeholder="Min 8 characters"
-              class="input w-full bg-white border-gray-200 focus:border-primary transition-all"
-            />
-            <p class="text-xs text-gray-400">Use 8+ characters with a mix of letters and numbers</p>
-          </div>
-
-          <!-- Confirm password -->
-          <div class="space-y-1.5">
-            <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm password</label>
-            <input
-              id="confirmPassword"
-              type="password"
-              autocomplete="new-password"
-              placeholder="Re-enter your password"
-              class="input w-full bg-white border-gray-200 focus:border-primary transition-all"
-            />
-          </div>
-
-          <!-- Terms -->
-          <div class="flex items-start gap-3">
-            <input
-              id="terms"
-              type="checkbox"
-              class="checkbox checkbox-primary checkbox-sm mt-0.5 shrink-0"
-            />
-            <label for="terms" class="text-sm text-gray-600 leading-relaxed">
-              I agree to the
-              <a href="#" class="text-primary hover:underline">Terms of Service</a>
-              and
-              <a href="#" class="text-primary hover:underline">Privacy Policy</a>
-            </label>
-          </div>
-
-          <!-- Submit -->
-          <button type="submit" class="btn btn-primary w-full h-11 text-sm font-medium">
-            Create account
-          </button>
-
-        </form>
-
-        <!-- Sign in link -->
-        <div class="divider my-6 text-xs text-gray-400">already have an account?</div>
-
-        <a href="javascript:void(0)" [routerLink]="'/login'" class="btn btn-ghost w-full h-10 text-sm font-medium text-primary border border-primary/20 hover:bg-primary/5">
-          Sign in instead &rarr;
-        </a>
-
-      </div>
-    </div>
-  </main>
+        </div>
+    </main>
 
 </div>
