@@ -13,22 +13,22 @@
   <section class="board__stats" aria-label="Sprint statistics">
     <div class="stat-card">
       <p class="stat-card__label">Total tasks</p>
-      <span class="stat-card__value">{{ totalCount() }}</span>
+      <span class="stat-card__value" [appCountUp]="totalCount()"></span>
     </div>
 
     <div class="stat-card">
       <p class="stat-card__label">In progress</p>
-      <span class="stat-card__value stat-card__value--blue">{{ inProgressCount() }}</span>
+      <span class="stat-card__value stat-card__value--blue" [appCountUp]="inProgressCount()"></span>
     </div>
 
     <div class="stat-card">
       <p class="stat-card__label">Completed</p>
-      <span class="stat-card__value stat-card__value--green">{{ doneCount() }}</span>
+      <span class="stat-card__value stat-card__value--green" [appCountUp]="doneCount()"></span>
     </div>
 
     <div class="stat-card">
       <p class="stat-card__label">Sprint progress</p>
-      <span class="stat-card__value stat-card__value--violet">{{ sprintProgress() }}%</span>
+      <span class="stat-card__value stat-card__value--violet"><span [appCountUp]="sprintProgress()"></span>%</span>
       <div class="stat-card__progress-track" role="progressbar"
         [attr.aria-valuenow]="sprintProgress()"
         aria-valuemin="0"

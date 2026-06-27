@@ -7,6 +7,7 @@ import {
 } from '@ng-icons/heroicons/outline';
 import { Task } from '@app/core/model/task.model';
 import { KanbanColumn } from '../../components/kanban-column/kanban-column';
+import { CountUp } from '@app/shared/directives/count-up';
 
 /** Static mock tasks — replace with httpResource() when the API is ready */
 const MOCK_TASKS: Task[] = [
@@ -28,7 +29,7 @@ const MOCK_TASKS: Task[] = [
   selector: 'app-kanban-board',
   templateUrl: './kanban-board.html',
   styleUrl: './kanban-board.scss',
-  imports: [KanbanColumn, NgIconComponent],
+  imports: [KanbanColumn, NgIconComponent, CountUp],
   viewProviders: [provideIcons({ heroPlus, heroMagnifyingGlass, heroFunnel })],
 })
 export class KanbanBoard {
