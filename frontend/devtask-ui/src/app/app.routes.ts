@@ -23,5 +23,15 @@ export const routes: Routes = [
         path: '',
         loadComponent: () => import('./features/auth/pages/login/login').then(m => m.Login),
     },
+    {
+        path: 'sprint',
+        loadComponent: () => import('./features/board/pages/main-layout/main-layout').then(m => m.MainLayout),
+        children: [
+            {
+                path: '',
+                loadComponent: () => import('./features/sprint/pages/sprint-dashboard/sprint-dashboard').then(m => m.SprintDashboard),
+            }
+        ]
+    },
     { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
