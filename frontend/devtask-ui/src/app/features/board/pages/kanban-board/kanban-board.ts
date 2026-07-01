@@ -1,4 +1,5 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { Dialog } from '@angular/cdk/dialog';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import {
   heroPlus,
@@ -8,6 +9,7 @@ import {
 import { Task } from '@app/core/model/task.model';
 import { KanbanColumn } from '../../components/kanban-column/kanban-column';
 import { CountUp } from '@app/shared/directives/count-up';
+import { NewTask } from '../new-task/new-task';
 
 /** Static mock tasks — replace with httpResource() when the API is ready */
 const MOCK_TASKS: Task[] = [
@@ -33,6 +35,8 @@ const MOCK_TASKS: Task[] = [
   viewProviders: [provideIcons({ heroPlus, heroMagnifyingGlass, heroFunnel })],
 })
 export class KanbanBoard {
+  private readonly dialog = inject(Dialog);
+
   /** Loading flag — set to true while httpResource() is pending */
   protected readonly isLoading = signal(false);
 
@@ -77,5 +81,14 @@ export class KanbanBoard {
   protected onSearchInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.searchQuery.set(value);
+  }
+
+  protected openNewTask(): void {
+    this.dialog.open(NewTask, {
+      width: '560px',
+      maxWidth: '95vw',
+      backdropClass: 'task-dialog-backdrop',
+      disableClose: true,
+    });
   }
 }

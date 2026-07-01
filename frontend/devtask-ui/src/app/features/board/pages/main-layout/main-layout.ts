@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { KanbanBoard } from "../kanban-board/kanban-board";
 import { Navbar } from "../navbar/navbar";
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-main-layout',
-  imports: [KanbanBoard, Navbar],
+  imports: [Navbar, RouterOutlet],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.scss',
 })

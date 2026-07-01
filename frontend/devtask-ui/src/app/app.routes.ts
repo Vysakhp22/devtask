@@ -2,10 +2,6 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
     {
-        path: 'login',
-        loadComponent: () => import('./features/auth/pages/login/login').then(m => m.Login),
-    },
-    {
         path: 'signup',
         loadComponent: () => import('./features/auth/pages/signup/signup').then(m => m.Signup),
     },
@@ -17,7 +13,15 @@ export const routes: Routes = [
                 path: '',
                 loadComponent: () => import('./features/board/pages/kanban-board/kanban-board').then(m => m.KanbanBoard),
             },
+            {
+                path: 'task-details',
+                loadComponent: () => import('./features/board/pages/task-details/task-details').then(m => m.TaskDetails),
+            }
         ]
     },
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    {
+        path: '',
+        loadComponent: () => import('./features/auth/pages/login/login').then(m => m.Login),
+    },
+    { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
