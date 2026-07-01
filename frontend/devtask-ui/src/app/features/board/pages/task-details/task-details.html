@@ -1,0 +1,248 @@
+<div class="td-page">
+
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <!-- LOADED STATE (default view)                                           -->
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+
+  <!-- ── Breadcrumb ─────────────────────────────────────────────────────── -->
+  <nav class="flex items-center gap-2 mb-5 min-w-0" aria-label="Breadcrumb">
+    <a routerLink="/board" class="td-back-link shrink-0">← Board</a>
+    <span class="text-sm text-gray-300 shrink-0" aria-hidden="true">›</span>
+    <span
+      class="text-sm text-gray-500 truncate"
+      aria-current="page"
+      title="Build Kanban board with httpResource()">
+      Build Kanban board with httpRe…
+    </span>
+  </nav>
+
+  <!-- ── Main detail card ───────────────────────────────────────────────── -->
+  <article class="td-card" aria-label="Task details">
+
+    <!-- ── Card header: badges + action buttons ─────────────────────────── -->
+    <div class="td-card-header">
+
+      <!-- Left: priority badge + status pill -->
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="td-badge td-badge--high" role="status" aria-label="Priority: High">
+          High priority
+        </span>
+        <span class="td-pill td-pill--inprogress" role="status" aria-label="Status: In progress">
+          In progress
+        </span>
+      </div>
+
+      <!-- Right: normal action buttons -->
+      <div class="flex items-center gap-2 shrink-0 td-card-actions">
+        <button
+          type="button"
+          class="td-btn td-btn--secondary"
+          aria-label="Edit this task">
+          <ng-icon name="heroPencilSquare" size="14" aria-hidden="true" />
+          Edit task
+        </button>
+        <button
+          type="button"
+          class="td-btn td-btn--danger"
+          aria-label="Delete this task">
+          <ng-icon name="heroTrash" size="14" aria-hidden="true" />
+          Delete
+        </button>
+      </div>
+
+      <!--
+        DELETE CONFIRMATION ROW
+        Replaces the action buttons after clicking "Delete".
+        Uncomment and toggle via a signal when implementing functionality.
+
+      <div
+        class="flex items-center gap-2 shrink-0 td-card-actions"
+        role="group"
+        aria-label="Confirm task deletion">
+        <span class="text-sm text-gray-700 whitespace-nowrap">Are you sure?</span>
+        <button type="button" class="td-btn td-btn--confirm-delete">
+          Yes, delete
+        </button>
+        <button type="button" class="td-btn td-btn--secondary">
+          Cancel
+        </button>
+      </div>
+      -->
+    </div>
+
+    <!-- ── Task title ────────────────────────────────────────────────────── -->
+    <h1 class="td-title">Build Kanban board with httpResource()</h1>
+
+    <!-- ── Meta row: Created · Deadline · Priority · Type ───────────────── -->
+    <div class="td-meta-row" role="list" aria-label="Task metadata">
+
+      <div class="td-meta-item" role="listitem">
+        <div class="td-meta-label-row">
+          <ng-icon name="heroCalendarDays" size="16" class="text-gray-400 shrink-0" aria-hidden="true" />
+          <span class="td-meta-label">Created</span>
+        </div>
+        <span class="td-meta-value">Jun 20, 2026</span>
+      </div>
+
+      <div class="td-meta-item" role="listitem">
+        <div class="td-meta-label-row">
+          <ng-icon name="heroClock" size="16" class="text-gray-400 shrink-0" aria-hidden="true" />
+          <span class="td-meta-label">Deadline</span>
+        </div>
+        <!-- td-meta-value--overdue turns value red when past or today -->
+        <span class="td-meta-value td-meta-value--overdue">Jun 24, 2026</span>
+      </div>
+
+      <div class="td-meta-item" role="listitem">
+        <div class="td-meta-label-row">
+          <ng-icon name="heroFlag" size="16" class="text-gray-400 shrink-0" aria-hidden="true" />
+          <span class="td-meta-label">Priority</span>
+        </div>
+        <span class="td-meta-value">High</span>
+      </div>
+
+      <div class="td-meta-item" role="listitem">
+        <div class="td-meta-label-row">
+          <ng-icon name="heroSquares2x2" size="16" class="text-gray-400 shrink-0" aria-hidden="true" />
+          <span class="td-meta-label">Type</span>
+        </div>
+        <span class="td-meta-value">Sprint task</span>
+      </div>
+
+    </div>
+
+    <hr class="td-divider" />
+
+    <!-- ── Description ──────────────────────────────────────────────────── -->
+    <section class="td-section" aria-labelledby="label-description">
+      <h2 class="td-section-label" id="label-description">Description</h2>
+      <p class="td-description">
+        Replace the old HttpClient + subscribe pattern with Angular 22's new
+        <code class="td-code">httpResource()</code> API. The task list should load
+        reactively with no manual subscriptions. Each Kanban column should be wrapped
+        in <code class="td-code">&#64;boundary</code> so a single column crash does not
+        affect the rest of the board.
+      </p>
+      <!-- Empty state — uncomment when description is absent:
+      <p class="td-description td-description--empty">No description added.</p>
+      -->
+    </section>
+
+    <hr class="td-divider" />
+
+    <!-- ── Tags ─────────────────────────────────────────────────────────── -->
+    <section class="td-section" aria-labelledby="label-tags">
+      <h2 class="td-section-label" id="label-tags">Tags</h2>
+      <div class="flex flex-wrap gap-1.5" aria-label="Task tags">
+        <span class="td-tag">angular</span>
+        <span class="td-tag">api</span>
+        <span class="td-tag">session-2</span>
+      </div>
+      <!-- Empty state — uncomment when tags array is empty:
+      <p class="text-sm text-gray-400">No tags.</p>
+      -->
+    </section>
+
+    <hr class="td-divider" />
+
+    <!-- ── Activity timeline (static scaffolding) ───────────────────────── -->
+    <section class="td-section" aria-labelledby="label-activity">
+      <h2 class="td-section-label" id="label-activity">Activity</h2>
+      <ul class="td-timeline" aria-label="Task activity history">
+
+        <li class="td-timeline-item">
+          <span class="td-timeline-dot" aria-hidden="true"></span>
+          <div>
+            <p class="td-timeline-action">
+              Status changed to <strong>In Progress</strong>
+            </p>
+            <time class="td-timeline-time">2 hours ago</time>
+          </div>
+        </li>
+
+        <li class="td-timeline-item">
+          <span class="td-timeline-dot td-timeline-dot--muted" aria-hidden="true"></span>
+          <div>
+            <p class="td-timeline-action">
+              Priority changed to <strong>High</strong>
+            </p>
+            <time class="td-timeline-time">Yesterday at 4:15 PM</time>
+          </div>
+        </li>
+
+        <li class="td-timeline-item">
+          <span class="td-timeline-dot td-timeline-dot--muted" aria-hidden="true"></span>
+          <div>
+            <p class="td-timeline-action">Task created</p>
+            <time class="td-timeline-time">Jun 20, 2026</time>
+          </div>
+        </li>
+
+      </ul>
+    </section>
+
+  </article>
+  <!-- /td-card -->
+
+</div>
+<!-- /td-page -->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- LOADING STATE (skeleton)                                                   -->
+<!-- Move this block above the breadcrumb and wrap with @if (isLoading())      -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--
+
+<div class="td-page" aria-busy="true" aria-label="Loading task details">
+  <nav class="flex items-center gap-2 mb-5">
+    <div class="td-skel rounded-full" style="width:60px;height:14px;"></div>
+    <span class="text-gray-300" aria-hidden="true">›</span>
+    <div class="td-skel rounded" style="width:180px;height:14px;"></div>
+  </nav>
+
+  <div class="td-card">
+    <div class="flex items-start justify-between gap-4 mb-4">
+      <div class="flex gap-2">
+        <div class="td-skel rounded-full" style="width:90px;height:24px;"></div>
+        <div class="td-skel rounded-full" style="width:80px;height:24px;"></div>
+      </div>
+      <div class="flex gap-2">
+        <div class="td-skel rounded-lg" style="width:80px;height:34px;"></div>
+        <div class="td-skel rounded-lg" style="width:70px;height:34px;"></div>
+      </div>
+    </div>
+    <div class="td-skel rounded mb-6" style="width:70%;height:28px;"></div>
+    <div class="td-meta-row mb-6">
+      <div class="td-skel rounded-lg" style="height:48px;"></div>
+      <div class="td-skel rounded-lg" style="height:48px;"></div>
+      <div class="td-skel rounded-lg" style="height:48px;"></div>
+      <div class="td-skel rounded-lg" style="height:48px;"></div>
+    </div>
+    <div class="td-skel rounded mb-3" style="height:14px;"></div>
+    <div class="td-skel rounded mb-3" style="width:90%;height:14px;"></div>
+    <div class="td-skel rounded" style="width:55%;height:14px;"></div>
+  </div>
+</div>
+
+-->
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- ERROR STATE (404 – task not found)                                         -->
+<!-- Wrap with @if (notFound()) and place inside td-page                        -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--
+
+<div class="td-page">
+  <div class="td-card">
+    <div class="td-error" role="alert" aria-live="assertive">
+      <ng-icon name="heroFaceFrown" size="56" class="text-gray-300 mb-4" aria-hidden="true" />
+      <h1 class="text-xl font-semibold text-[#1A1A2E] mb-2">Task not found</h1>
+      <p class="text-sm text-gray-500 mb-6">This task may have been deleted.</p>
+      <a routerLink="/board" class="td-btn td-btn--back-link">← Back to board</a>
+    </div>
+  </div>
+</div>
+
+-->

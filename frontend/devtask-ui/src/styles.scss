@@ -58,3 +58,14 @@ body {
     outline: none !important;
     box-shadow: none !important;
 }
+
+/* ── CDK Dialog backdrop ──────────────────────────────────────────────────── */
+.task-dialog-backdrop {
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.task-dialog-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

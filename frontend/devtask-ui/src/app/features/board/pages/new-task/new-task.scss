@@ -1,0 +1,273 @@
+// ── Modal card ───────────────────────────────────────────────────────────────
+.new-task {
+  position: relative;
+  background: #ffffff;
+  border-radius: 16px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+
+  // ── Header ─────────────────────────────────────────────────────────────────
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 32px 22px;
+    border-bottom: 1px solid #f3f4f6;
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+    z-index: 1;
+  }
+
+  &__close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: none;
+    background: none;
+    color: #9ca3af;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    &:hover {
+      background: #f3f4f6;
+      color: #374151;
+    }
+  }
+
+  // ── Form ───────────────────────────────────────────────────────────────────
+  &__form {
+    padding: 24px 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+  }
+
+  // ── Text inputs & textarea ─────────────────────────────────────────────────
+  &__input {
+    width: 100%;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #1a1a2e;
+    background: #ffffff;
+    transition: border-color 0.15s ease;
+    font-family: inherit;
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+
+    &:focus {
+      border-color: #6b5ce7;
+    }
+
+    &--error {
+      border-color: #f87171 !important;
+    }
+
+    &--textarea {
+      resize: vertical;
+      min-height: 96px;
+      line-height: 1.5;
+    }
+  }
+
+  // ── Dirty-form guard overlay ───────────────────────────────────────────────
+  &__guard {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(4px);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    padding: 40px 32px;
+    text-align: center;
+  }
+}
+
+// ── Segmented control buttons ────────────────────────────────────────────────
+.segment-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: center;
+  font-family: inherit;
+
+  &:hover:not([aria-checked='true']) {
+    border-color: #d1d5db;
+    background: #f9fafb;
+  }
+
+  // Priority: low selected
+  &--low {
+    background: #f0fdf4;
+    border-color: #22c55e;
+    color: #16a34a;
+  }
+
+  // Priority: medium selected
+  &--medium {
+    background: #fffbeb;
+    border-color: #f59e0b;
+    color: #d97706;
+  }
+
+  // Priority: high selected
+  &--high {
+    background: #fef2f2;
+    border-color: #ef4444;
+    color: #dc2626;
+  }
+
+  // Type: selected
+  &--type-active {
+    background: #eff6ff;
+    border-color: #2563eb;
+    color: #2563eb;
+  }
+}
+
+// ── Conditional deadline field ───────────────────────────────────────────────
+.deadline-field {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  margin-top: -20px; // cancel the parent flex gap when hidden
+  transition:
+    max-height 0.22s ease,
+    opacity 0.18s ease,
+    margin-top 0.22s ease;
+
+  &--visible {
+    max-height: 120px;
+    opacity: 1;
+    margin-top: 0;
+  }
+}
+
+// ── Tag field container ──────────────────────────────────────────────────────
+.tag-field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #ffffff;
+  min-height: 42px;
+  cursor: text;
+  transition: border-color 0.15s ease;
+
+  &:focus-within {
+    border-color: #6b5ce7;
+  }
+}
+
+// ── Tag chip ─────────────────────────────────────────────────────────────────
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 99px;
+  background: #f3f4f6;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+
+  &__remove {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: none;
+    background: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: background 0.1s ease, color 0.1s ease;
+
+    &:hover {
+      color: #6b7280;
+      background: #e5e7eb;
+    }
+  }
+}
+
+// ── Tag input (inline, inside tag-field) ─────────────────────────────────────
+.tag-input {
+  flex: 1;
+  min-width: 80px;
+  border: none;
+  outline: none;
+  font-size: 13px;
+  color: #374151;
+  background: transparent;
+  padding: 2px 0;
+  font-family: inherit;
+
+  &::placeholder {
+    color: #9ca3af;
+  }
+}
+
+// ── Submit button ────────────────────────────────────────────────────────────
+.submit-btn {
+  background: #6b5ce7;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease, opacity 0.15s ease;
+  font-family: inherit;
+
+  &:hover:not(:disabled) {
+    background: #5a4dd6;
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+
+  &--success {
+    background: #22c55e;
+
+    &:hover:not(:disabled) {
+      background: #16a34a;
+    }
+  }
+}

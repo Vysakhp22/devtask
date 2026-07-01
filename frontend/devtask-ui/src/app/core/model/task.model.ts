@@ -7,6 +7,7 @@ export interface Task {
   title: string;
   priority: Priority;
   status: TaskStatus;
+  description?: string;
   deadline?: string; // ISO date string e.g. "2026-06-28"
   tags?: string[];
 }

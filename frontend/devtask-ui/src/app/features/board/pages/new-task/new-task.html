@@ -1,0 +1,220 @@
+<div class="new-task" role="dialog" aria-modal="true" aria-labelledby="new-task-title">
+
+  <!-- ── Dirty-form guard overlay ──────────────────────────────────────── -->
+  @if (showDirtyGuard()) {
+    <div class="new-task__guard" role="alertdialog" aria-modal="true" aria-labelledby="guard-heading">
+      <p id="guard-heading" class="text-[15px] font-semibold text-gray-900 mb-1">You have unsaved changes.</p>
+      <p class="text-sm text-gray-500 mb-5">Leave anyway?</p>
+      <div class="flex gap-3 justify-center">
+        <button
+          type="button"
+          (click)="stayInForm()"
+          class="px-4 py-2 rounded-lg bg-[#6B5CE7] text-white text-sm font-medium hover:bg-[#5A4DD6] transition-colors">
+          Stay
+        </button>
+        <button
+          type="button"
+          (click)="close()"
+          class="px-4 py-2 rounded-lg border border-gray-200 text-gray-700 text-sm hover:bg-gray-50 transition-colors">
+          Leave without saving
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- ── Header ────────────────────────────────────────────────────────── -->
+  <header class="new-task__header">
+    <h2 id="new-task-title" class="text-lg font-semibold text-[#1A1A2E]">New task</h2>
+    <button
+      type="button"
+      class="new-task__close-btn"
+      (click)="tryClose()"
+      aria-label="Close dialog">
+      <ng-icon name="heroXMark" size="18" aria-hidden="true" />
+    </button>
+  </header>
+
+  <!-- ── Form ──────────────────────────────────────────────────────────── -->
+  <form class="new-task__form" novalidate aria-label="New task form" [formRoot]="taskForm">
+
+    <!-- Title -->
+    <div class="new-task__field">
+      <div class="flex items-center justify-between mb-1.5">
+        <label for="task-title" class="new-task__label">
+          Title <span class="text-red-400" aria-hidden="true">*</span>
+        </label>
+        <span
+          class="text-[11px] text-gray-400"
+          [class.text-amber-500]="titleLength() > 100"
+          aria-live="polite"
+          aria-atomic="true">
+          {{ titleLength() }} / 120
+        </span>
+      </div>
+      <input
+        [formField]="taskForm.title"
+        id="task-title"
+        type="text"
+        placeholder="What needs to be done?"
+        class="new-task__input"
+        [class.new-task__input--error]="taskForm.title().touched() && taskForm.title().invalid()"
+        autocomplete="off"
+        aria-required="true"
+        [attr.aria-invalid]="taskForm.title().touched() && taskForm.title().invalid() ? 'true' : null" />
+      @if (taskForm.title().touched() && taskForm.title().errors().length) {
+        <p class="text-xs text-red-500 mt-1.5" role="alert" aria-live="assertive">
+          {{ taskForm.title().errors()[0].message }}
+        </p>
+      }
+    </div>
+
+    <!-- Description -->
+    <div class="new-task__field">
+      <label for="task-desc" class="new-task__label mb-1.5 block">Description</label>
+      <textarea
+        [formField]="taskForm.description"
+        id="task-desc"
+        rows="4"
+        placeholder="Add more context, links, or notes…"
+        class="new-task__input new-task__input--textarea"
+        autocomplete="off"></textarea>
+    </div>
+
+    <!-- Priority -->
+    <div class="new-task__field">
+      <p id="priority-label" class="new-task__label mb-1.5">Priority</p>
+      <div class="flex gap-2" role="radiogroup" aria-labelledby="priority-label">
+        @for (opt of priorityOptions; track opt.value) {
+          <button
+            type="button"
+            role="radio"
+            [attr.aria-checked]="selectedPriority() === opt.value"
+            [class]="getPriorityBtnClass(opt.value)"
+            (click)="setPriority(opt.value)">
+            {{ opt.label }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- Type -->
+    <div class="new-task__field">
+      <div class="flex items-center justify-between mb-1.5">
+        <p id="type-label" class="new-task__label">Type</p>
+        <span class="text-[11px] text-gray-400">Controls deadline field</span>
+      </div>
+      <div class="flex gap-2" role="radiogroup" aria-labelledby="type-label">
+        @for (opt of typeOptions; track opt.value) {
+          <button
+            type="button"
+            role="radio"
+            [attr.aria-checked]="selectedType() === opt.value"
+            [class]="getTypeBtnClass(opt.value)"
+            (click)="setType(opt.value)">
+            {{ opt.label }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- Deadline (conditional) -->
+    <div class="deadline-field" [class.deadline-field--visible]="isSprintTask()">
+      <div class="new-task__field">
+        <div class="flex items-center justify-between mb-1.5">
+          <label for="task-deadline" class="new-task__label">
+            Sprint deadline <span class="text-red-400" aria-hidden="true">*</span>
+          </label>
+          <span class="text-[11px] text-gray-400">Required for sprint tasks</span>
+        </div>
+        <input
+          [formField]="taskForm.deadline"
+          id="task-deadline"
+          type="date"
+          class="new-task__input"
+          [class.new-task__input--error]="!!deadlineError()"
+          [attr.aria-required]="isSprintTask() ? 'true' : null"
+          [attr.aria-invalid]="!!deadlineError() ? 'true' : null" />
+        @if (deadlineError()) {
+          <p class="text-xs text-red-500 mt-1.5" role="alert">{{ deadlineError() }}</p>
+        }
+      </div>
+    </div>
+
+    <!-- Tags -->
+    <div class="new-task__field">
+      <div class="flex items-center justify-between mb-1.5">
+        <label for="tag-input" class="new-task__label">Tags</label>
+        <span class="text-[11px] text-gray-400">Max {{ MAX_TAGS }} · Press Enter to add</span>
+      </div>
+      <div class="tag-field">
+        @for (tag of tags(); track tag) {
+          <span class="tag-chip">
+            {{ tag }}
+            <button
+              type="button"
+              class="tag-chip__remove"
+              (click)="removeTag(tag)"
+              [attr.aria-label]="'Remove tag ' + tag">
+              <svg width="9" height="9" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" />
+              </svg>
+            </button>
+          </span>
+        }
+        @if (tags().length < MAX_TAGS) {
+          <input
+            id="tag-input"
+            type="text"
+            class="tag-input"
+            placeholder="Add a tag…"
+            [value]="tagInputValue()"
+            (input)="onTagInput($event)"
+            (keydown)="onTagKeydown($event)"
+            [attr.aria-label]="'Add tag, ' + tags().length + ' of ' + MAX_TAGS + ' added'"
+            autocomplete="off" />
+        }
+      </div>
+      <p class="text-[11px] text-gray-400 mt-1.5">Press Enter or comma to add</p>
+    </div>
+
+    <!-- Submit error banner -->
+    @if (submitError()) {
+      <div role="alert" class="rounded-lg bg-red-50 border border-red-200 text-red-600 px-4 py-3 text-sm">
+        Something went wrong. Please try again.
+      </div>
+    }
+
+    <!-- Save button -->
+    <button
+      type="submit"
+      class="submit-btn w-full h-11 rounded-lg font-medium text-sm flex items-center justify-center gap-2"
+      [class.submit-btn--success]="submitSuccess()"
+      [disabled]="taskForm().submitting() || submitSuccess()"
+      aria-live="polite">
+      @if (taskForm().submitting()) {
+        <svg class="animate-spin h-4 w-4 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        </svg>
+        Saving…
+      } @else if (submitSuccess()) {
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <circle cx="8" cy="8" r="7.25" stroke="currentColor" stroke-width="1.5" />
+          <path d="M4.5 8L6.5 10.5L11.5 5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        Saved!
+      } @else {
+        Save task
+      }
+    </button>
+
+    <!-- Cancel -->
+    <button
+      type="button"
+      class="w-full h-11 rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 transition-all"
+      (click)="tryClose()">
+      Cancel
+    </button>
+
+  </form>
+</div>
