@@ -1,0 +1,277 @@
+<div class="sprint-page">
+
+  <!-- ── Page header ─────────────────────────────────────────────────────── -->
+  <header class="sprint-page__header">
+    <h1 class="sprint-page__title">Sprint dashboard</h1>
+
+    <!-- Sprint period pill -->
+    <div class="sprint-period-pill" aria-label="Sprint period: Jun 16 to Jun 30">
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <rect x="1" y="2" width="14" height="13" rx="2" stroke="#2563EB" stroke-width="1.5"/>
+        <path d="M1 6h14" stroke="#2563EB" stroke-width="1.5"/>
+        <path d="M5 1v2M11 1v2" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      {{ sprintPeriod }}
+    </div>
+  </header>
+
+  <!-- ── Empty state ─────────────────────────────────────────────────────── -->
+  @if (totalTasks() === 0) {
+    <div class="sprint-empty" role="region" aria-label="No sprint data">
+      <!-- Gray illustration placeholder -->
+      <div class="sprint-empty__illustration" aria-hidden="true"></div>
+      <h2 class="sprint-empty__heading">No sprint data yet</h2>
+      <p class="sprint-empty__text">Add tasks on the board to start tracking your sprint.</p>
+      <a routerLink="/board" class="sprint-empty__btn">Go to board</a>
+    </div>
+
+  } @else {
+
+  <!-- ── Two-column dashboard grid ───────────────────────────────────────── -->
+  <div class="sprint-grid">
+
+    <!-- ═══════════════ LEFT COLUMN (65%) ══════════════════════════════════ -->
+    <div class="sprint-grid__left">
+
+      <!-- ── Burndown chart card ────────────────────────────────────────── -->
+      <section class="sprint-card" aria-label="Burndown chart">
+
+        <!-- Card header: title + custom legend pills -->
+        <div class="sprint-card__header">
+          <div>
+            <h2 class="sprint-card__title">Burndown</h2>
+            <p class="sprint-card__subtitle">Ideal vs actual remaining tasks</p>
+          </div>
+
+          <!-- Legend rendered as HTML, not inside the canvas (spec requirement) -->
+          <div class="burndown-legend" aria-hidden="true">
+            <span class="burndown-legend__item">
+              <span class="burndown-legend__dash"></span> Ideal
+            </span>
+            <span class="burndown-legend__item">
+              <span class="burndown-legend__dot"></span> Actual
+            </span>
+          </div>
+        </div>
+
+        <!-- Chart container — shows skeleton while chartReady is false -->
+        <div
+          class="burndown-chart-wrap"
+          role="img"
+          [attr.aria-label]="'Sprint burndown: Day ' + (actualData.length - actualData.filter(d => d === null).length) + ' of ' + burndownLabels.length + ' recorded'">
+
+          @if (chartReady()) {
+            <!-- ng2-charts / Chart.js canvas.
+                 aria-hidden because the accessible data lives in the <table> below. -->
+            <canvas
+              baseChart
+              [data]="burndownData"
+              [options]="burndownOptions"
+              type="line"
+              aria-hidden="true">
+            </canvas>
+          } @else {
+            <!-- Skeleton placeholder: 4 animated gray bars shown while chart loads -->
+            <div class="burndown-skeleton" aria-busy="true" aria-label="Loading burndown chart">
+              <div class="burndown-skeleton__bar" style="height:55%"></div>
+              <div class="burndown-skeleton__bar" style="height:72%"></div>
+              <div class="burndown-skeleton__bar" style="height:40%"></div>
+              <div class="burndown-skeleton__bar" style="height:85%"></div>
+            </div>
+          }
+        </div>
+
+        <!-- Accessible data table (visually hidden).
+             Angular Aria approach: screen readers cannot parse a Chart.js canvas,
+             so we provide the raw data in a <table> with a <caption>. This satisfies
+             WCAG 1.1.1 (non-text content) and gives assistive tech users the same
+             information as sighted users. -->
+        <table class="sr-only" aria-label="Burndown chart data">
+          <caption>Sprint burndown: ideal vs actual remaining tasks per day</caption>
+          <thead>
+            <tr>
+              <th scope="col">Day</th>
+              <th scope="col">Ideal remaining</th>
+              <th scope="col">Actual remaining</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (label of burndownLabels; track label; let i = $index) {
+              <tr>
+                <td>{{ label }}</td>
+                <td>{{ idealData[i] }}</td>
+                <td>{{ actualData[i] ?? '—' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+
+      </section><!-- /burndown card -->
+
+      <!-- ── Tasks by status card ───────────────────────────────────────── -->
+      <section class="sprint-card" aria-label="Tasks by status">
+        <h2 class="sprint-card__title" style="margin-bottom:16px">Tasks by status</h2>
+
+        <table class="status-table">
+          <thead>
+            <tr>
+              <th class="status-table__th" scope="col">Status</th>
+              <th class="status-table__th" scope="col">Count</th>
+              <th class="status-table__th" scope="col">Share</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <!-- To Do -->
+            <tr class="status-table__row">
+              <td class="status-table__td">
+                <span class="status-pill status-pill--todo">To do</span>
+              </td>
+              <td class="status-table__td status-table__td--num">{{ todoCount() }}</td>
+              <td class="status-table__td">
+                <span class="share-cell">
+                  <span class="share-cell__pct">{{ todoShare() }}%</span>
+                  <span class="share-cell__track" role="presentation">
+                    <span class="share-cell__fill" [style.width.%]="todoShare()"></span>
+                  </span>
+                </span>
+              </td>
+            </tr>
+
+            <!-- In Progress -->
+            <tr class="status-table__row">
+              <td class="status-table__td">
+                <span class="status-pill status-pill--inprogress">In progress</span>
+              </td>
+              <td class="status-table__td status-table__td--num">{{ inProgressCount() }}</td>
+              <td class="status-table__td">
+                <span class="share-cell">
+                  <span class="share-cell__pct">{{ inProgressShare() }}%</span>
+                  <span class="share-cell__track" role="presentation">
+                    <span class="share-cell__fill" [style.width.%]="inProgressShare()"></span>
+                  </span>
+                </span>
+              </td>
+            </tr>
+
+            <!-- Done -->
+            <tr class="status-table__row">
+              <td class="status-table__td">
+                <span class="status-pill status-pill--done">Done</span>
+              </td>
+              <td class="status-table__td status-table__td--num">{{ completedCount() }}</td>
+              <td class="status-table__td">
+                <span class="share-cell">
+                  <span class="share-cell__pct">{{ doneShare() }}%</span>
+                  <span class="share-cell__track" role="presentation">
+                    <span class="share-cell__fill" [style.width.%]="doneShare()"></span>
+                  </span>
+                </span>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </section><!-- /status card -->
+
+    </div><!-- /left column -->
+
+    <!-- ═══════════════ RIGHT COLUMN (35%) ═════════════════════════════════ -->
+    <div class="sprint-grid__right">
+
+      <!-- ── Sprint health card ──────────────────────────────────────────── -->
+      <section class="sprint-card" aria-label="Sprint health">
+        <h2 class="sprint-card__title" style="margin-bottom:16px">Sprint health</h2>
+
+        <!-- 4 stat rows -->
+        <div class="health-stats" role="list">
+
+          <div class="health-stat" role="listitem">
+            <span class="health-stat__icon" aria-hidden="true">📋</span>
+            <span class="health-stat__label">Total tasks</span>
+            <span class="health-stat__value" [attr.aria-label]="totalTasks() + ' total tasks'">{{ totalTasks() }}</span>
+          </div>
+
+          <div class="health-stat" role="listitem">
+            <span class="health-stat__icon" aria-hidden="true">✅</span>
+            <span class="health-stat__label">Completed</span>
+            <span class="health-stat__value health-stat__value--green" [attr.aria-label]="completedCount() + ' tasks completed'">{{ completedCount() }}</span>
+          </div>
+
+          <div class="health-stat" role="listitem">
+            <span class="health-stat__icon" aria-hidden="true">⏳</span>
+            <span class="health-stat__label">Remaining</span>
+            <span class="health-stat__value" [attr.aria-label]="remainingCount() + ' tasks remaining'">{{ remainingCount() }}</span>
+          </div>
+
+          <div class="health-stat" role="listitem">
+            <span class="health-stat__icon" aria-hidden="true">📅</span>
+            <span class="health-stat__label">Days left</span>
+            <span class="health-stat__value" [attr.aria-label]="daysLeft + ' days left in sprint'">{{ daysLeft }}</span>
+          </div>
+
+        </div>
+
+        <!-- SVG donut ring — pure SVG, no chart library.
+             stroke-dasharray sets the dash equal to the full circumference so the
+             entire arc can be stroked; stroke-dashoffset shifts the visible portion,
+             creating a progress arc proportional to completionPct(). -->
+        <div
+          class="donut-wrap"
+          role="img"
+          [attr.aria-label]="completionPct() + '% of sprint tasks completed'">
+
+          <svg viewBox="0 0 120 120" width="120" height="120" aria-hidden="true">
+            <!-- Gray track ring -->
+            <circle cx="60" cy="60" [attr.r]="donutR" fill="none" stroke="#E5E7EB" stroke-width="8"/>
+            <!-- Violet progress arc; rotated -90° so progress starts at the top -->
+            <circle
+              cx="60" cy="60"
+              [attr.r]="donutR"
+              fill="none"
+              stroke="#6B5CE7"
+              stroke-width="8"
+              stroke-linecap="round"
+              [attr.stroke-dasharray]="donutCircumference"
+              [attr.stroke-dashoffset]="donutOffset()"
+              transform="rotate(-90 60 60)"
+              class="donut-arc"/>
+          </svg>
+
+          <!-- Centered text overlay -->
+          <div class="donut-center" aria-hidden="true">
+            <span class="donut-center__pct">{{ completionPct() }}%</span>
+            <span class="donut-center__label">complete</span>
+          </div>
+        </div>
+
+      </section><!-- /sprint health card -->
+
+      <!-- ── Pace card ───────────────────────────────────────────────────── -->
+      <section class="sprint-card pace-card" aria-label="Sprint pace">
+        <h2 class="pace-card__title">Pace</h2>
+        <p class="pace-card__value" [attr.aria-label]="pace + ' tasks per day'">
+          {{ pace }} tasks / day
+        </p>
+        <p class="pace-card__subtitle">At this pace, sprint ends {{ paceEndDate }}</p>
+
+        <!-- Conditional banner: amber if behind, green if on track -->
+        @if (!isOnTrack) {
+          <div class="pace-banner pace-banner--warn" role="alert">
+            <span aria-hidden="true">⚠</span>
+            {{ behindBy }} tasks behind ideal pace
+          </div>
+        } @else {
+          <div class="pace-banner pace-banner--ok" role="status">
+            <span aria-hidden="true">✓</span>
+            On track!
+          </div>
+        }
+      </section><!-- /pace card -->
+
+    </div><!-- /right column -->
+  </div><!-- /sprint-grid -->
+
+  }<!-- /empty state -->
+
+</div><!-- /sprint-page -->

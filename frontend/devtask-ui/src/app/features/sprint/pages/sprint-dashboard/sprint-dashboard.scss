@@ -1,0 +1,419 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Sprint Dashboard styles
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ── Page wrapper ──────────────────────────────────────────────────────────────
+// flex:1 + min-height:0 lets this fill the remaining space inside MainLayout's
+// flex column; overflow-y:auto enables page-level scrolling below the navbar.
+.sprint-page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 28px 32px;
+  background: #f8f7f5;
+
+  @media (max-width: 640px) {
+    padding: 20px 16px;
+  }
+
+  // ── Page header ─────────────────────────────────────────────────────────────
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  &__title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a1a2e;
+    letter-spacing: -0.01em;
+  }
+}
+
+// ── Sprint period pill ────────────────────────────────────────────────────────
+.sprint-period-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+// ── Two-column grid ───────────────────────────────────────────────────────────
+.sprint-grid {
+  display: grid;
+  grid-template-columns: 65fr 35fr;
+  gap: 20px;
+  align-items: start;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+
+  &__left,
+  &__right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+// ── Card ──────────────────────────────────────────────────────────────────────
+.sprint-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid #f3f4f6;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    gap: 16px;
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a2e;
+    line-height: 1.3;
+  }
+
+  &__subtitle {
+    font-size: 13px;
+    color: #9ca3af;
+    margin-top: 3px;
+  }
+}
+
+// ── Burndown legend ───────────────────────────────────────────────────────────
+// Custom pill-style legend below the card title, not inside the canvas.
+.burndown-legend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #6b7280;
+  }
+
+  // Dashed gray line swatch
+  &__dash {
+    display: inline-block;
+    width: 18px;
+    height: 2px;
+    background: repeating-linear-gradient(
+      to right,
+      #d1d5db 0,
+      #d1d5db 5px,
+      transparent 5px,
+      transparent 9px
+    );
+  }
+
+  // Filled violet circle swatch
+  &__dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #6b5ce7;
+  }
+}
+
+// ── Burndown chart container ──────────────────────────────────────────────────
+.burndown-chart-wrap {
+  height: 200px;
+  position: relative;
+}
+
+// ── Skeleton loader ───────────────────────────────────────────────────────────
+// 4 gray bars that pulse while the chart module loads.
+.burndown-skeleton {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 100%;
+  padding: 8px 4px;
+
+  &__bar {
+    flex: 1;
+    background: #f3f4f6;
+    border-radius: 4px;
+    animation: skeleton-pulse 1.6s ease-in-out infinite;
+
+    &:nth-child(2) { animation-delay: 0.2s; }
+    &:nth-child(3) { animation-delay: 0.4s; }
+    &:nth-child(4) { animation-delay: 0.6s; }
+  }
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+// ── Status table ──────────────────────────────────────────────────────────────
+.status-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  &__th {
+    font-size: 12px;
+    font-weight: 500;
+    color: #9ca3af;
+    text-align: left;
+    padding: 0 0 10px;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  &__row {
+    border-bottom: 1px solid #f3f4f6;
+    transition: background 0.12s ease;
+
+    &:last-child { border-bottom: none; }
+    &:hover      { background: #f9fafb; }
+  }
+
+  &__td {
+    padding: 11px 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a1a2e;
+    vertical-align: middle;
+
+    &--num {
+      padding-left: 8px;
+      width: 52px;
+    }
+  }
+}
+
+// ── Status pills ──────────────────────────────────────────────────────────────
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 500;
+
+  &--todo       { background: #f3f4f6; color: #374151; }
+  &--inprogress { background: #ede9fe; color: #6b5ce7; }
+  &--done       { background: #dcfce7; color: #16a34a; }
+}
+
+// ── Share cell (percent text + thin progress bar) ─────────────────────────────
+.share-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  &__pct {
+    font-size: 13px;
+    color: #6b7280;
+    font-weight: 400;
+    min-width: 36px;
+  }
+
+  &__track {
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: #f3f4f6;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  &__fill {
+    display: block;
+    height: 100%;
+    background: #6b5ce7;
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+}
+
+// ── Sprint health stats ───────────────────────────────────────────────────────
+.health-stats {
+  margin-bottom: 20px;
+}
+
+.health-stat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f3f4f6;
+
+  &:last-child { border-bottom: none; }
+
+  &__icon { font-size: 15px; width: 20px; text-align: center; }
+
+  &__label {
+    flex: 1;
+    font-size: 14px;
+    color: #374151;
+  }
+
+  &__value {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a1a2e;
+
+    &--green { color: #16a34a; }
+  }
+}
+
+// ── SVG donut ─────────────────────────────────────────────────────────────────
+.donut-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+}
+
+// Smooth transition when the offset changes reactively.
+.donut-arc {
+  transition: stroke-dashoffset 0.6s ease-in-out;
+}
+
+// Center percentage overlay, positioned on top of the SVG.
+.donut-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+
+  &__pct {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a2e;
+    line-height: 1;
+  }
+
+  &__label {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 3px;
+  }
+}
+
+// ── Pace card ─────────────────────────────────────────────────────────────────
+.pace-card {
+  &__title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin-bottom: 8px;
+  }
+
+  &__value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #6b5ce7;
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
+  }
+
+  &__subtitle {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 14px;
+  }
+}
+
+// ── Pace banner ───────────────────────────────────────────────────────────────
+.pace-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+
+  &--warn {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #d97706;
+  }
+
+  &--ok {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #16a34a;
+  }
+}
+
+// ── Empty state ───────────────────────────────────────────────────────────────
+.sprint-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  text-align: center;
+
+  &__illustration {
+    width: 120px;
+    height: 80px;
+    background: #f3f4f6;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  &__heading {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin-bottom: 8px;
+  }
+
+  &__text {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 20px;
+    max-width: 300px;
+  }
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    background: #6b5ce7;
+    color: #ffffff;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.15s ease;
+
+    &:hover { background: #5b4cd7; }
+
+    &:focus-visible {
+      outline: 2px solid #6b5ce7;
+      outline-offset: 2px;
+    }
+  }
+}
