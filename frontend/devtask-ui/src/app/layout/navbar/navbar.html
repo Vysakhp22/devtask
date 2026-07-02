@@ -1,0 +1,82 @@
+<nav class="navbar" aria-label="Main navigation">
+
+  <!-- Left: Logo -->
+  <div class="navbar__logo">
+    <div class="navbar__logo-icon" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 22 22" fill="none">
+        <rect x="3" y="3" width="7" height="7" rx="1.5" fill="white" opacity="0.9" />
+        <rect x="12" y="3" width="7" height="7" rx="1.5" fill="white" opacity="0.45" />
+        <rect x="3" y="12" width="7" height="7" rx="1.5" fill="white" opacity="0.45" />
+        <rect x="12" y="12" width="7" height="7" rx="1.5" fill="white" opacity="0.75" />
+      </svg>
+    </div>
+    <span class="navbar__brand">DevTask</span>
+  </div>
+
+  <!-- Center: Nav links -->
+  <div class="navbar__links" role="list">
+    <a
+      routerLink="/board"
+      routerLinkActive="navbar__link--active"
+      class="navbar__link"
+      aria-label="Board view"
+      role="listitem">
+      Board
+    </a>
+    <a
+      routerLink="/sprint"
+      routerLinkActive="navbar__link--active"
+      class="navbar__link"
+      aria-label="Sprint view"
+      role="listitem">
+      Sprint
+    </a>
+  </div>
+
+  <!-- Right: User avatar -->
+  <div class="navbar__user">
+    <button
+      type="button"
+      class="navbar__avatar-btn"
+      (click)="toggleUserMenu()"
+      [attr.aria-expanded]="isUserMenuOpen()"
+      aria-haspopup="menu"
+      aria-label="User menu">
+      <span class="navbar__avatar" aria-hidden="true">YO</span>
+      <ng-icon
+        name="heroChevronDown"
+        size="14"
+        class="navbar__chevron"
+        [class.navbar__chevron--open]="isUserMenuOpen()"
+        aria-hidden="true" />
+    </button>
+
+    <!-- Dropdown menu -->
+    @if (isUserMenuOpen()) {
+      <div
+        class="navbar__dropdown"
+        role="menu"
+        aria-label="User options"
+        (mouseleave)="closeUserMenu()">
+        <button
+          type="button"
+          class="navbar__dropdown-item navbar__dropdown-item--disabled"
+          role="menuitem"
+          disabled
+          aria-disabled="true">
+          <ng-icon name="heroCog6Tooth" size="15" aria-hidden="true" />
+          Settings
+        </button>
+        <hr class="navbar__dropdown-divider" role="separator" />
+        <button
+          type="button"
+          class="navbar__dropdown-item navbar__dropdown-item--danger"
+          role="menuitem">
+          <ng-icon name="heroArrowRightOnRectangle" size="15" aria-hidden="true" />
+          Log out
+        </button>
+      </div>
+    }
+  </div>
+
+</nav>
