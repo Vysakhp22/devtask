@@ -7,7 +7,7 @@ export const routes: Routes = [
     },
     {
         path: 'board',
-        loadComponent: () => import('./features/board/pages/main-layout/main-layout').then(m => m.MainLayout),
+        loadComponent: () => import('./layout/main-layout/main-layout').then(m => m.MainLayout),
         children: [
             {
                 path: '',
@@ -25,7 +25,7 @@ export const routes: Routes = [
     },
     {
         path: 'sprint',
-        loadComponent: () => import('./features/board/pages/main-layout/main-layout').then(m => m.MainLayout),
+        loadComponent: () => import('./layout/main-layout/main-layout').then(m => m.MainLayout),
         children: [
             {
                 path: '',
