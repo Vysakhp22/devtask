@@ -1,5 +1,8 @@
-package com.devtask.auth.dto;
+package com.devtask.auth;
 
+import com.devtask.auth.dto.AuthResponse;
+import com.devtask.auth.dto.LoginRequest;
+import com.devtask.auth.dto.RegisterRequest;
 import com.devtask.security.JwtService;
 import com.devtask.user.User;
 import com.devtask.user.UserRepository;
