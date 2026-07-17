@@ -1,5 +1,6 @@
 package com.devtask.task;
 
+import com.devtask.task.dto.TaskRequest;
 import com.devtask.task.dto.TaskResponse;
 import com.devtask.user.User;
 import com.devtask.user.UserRepository;
@@ -29,6 +30,24 @@ public class TaskService {
         return mapToResponse(task);
     }
 
+    public TaskResponse createTask(TaskRequest taskRequest) {
+        User user = getCurrentUser();
+
+        Task task = Task.builder()
+                .title(taskRequest.getTitle())
+                .description(taskRequest.getDescription())
+                .status(taskRequest.getStatus())
+                .priority(taskRequest.getPriority())
+                .type(taskRequest.getType())
+                .deadline(taskRequest.getDeadline())
+                .tags(JoinTags(taskRequest.getTags()))
+                .user(user)
+                .build();
+
+        Task savedTask = taskRepository.save(task);
+        return mapToResponse(savedTask);
+    }
+
 
     private User getCurrentUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -40,6 +59,13 @@ public class TaskService {
             return List.of();
         }
         return Arrays.asList(tags.split(","));
+    }
+
+    private String JoinTags(List<String> tags) {
+        if (tags == null || tags.isEmpty()) {
+            return "";
+        }
+        return String.join(",", tags);
     }
 
     private Task findTaskAndVerifyOwnership(String taskId) {
