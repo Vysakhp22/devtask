@@ -24,6 +24,12 @@ public class TaskService {
         return tasks.stream().map(this::mapToResponse).collect(Collectors.toList());
     }
 
+    private TaskResponse getTaskById(String taskId) {
+        Task task = findTaskAndVerifyOwnership(taskId);
+        return mapToResponse(task);
+    }
+
+
     private User getCurrentUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
@@ -34,6 +40,19 @@ public class TaskService {
             return List.of();
         }
         return Arrays.asList(tags.split(","));
+    }
+
+    private Task findTaskAndVerifyOwnership(String taskId) {
+        User user = getCurrentUser();
+
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        if (!task.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("You do not have permission to access this task");
+        }
+
+        return task;
     }
 
     private TaskResponse mapToResponse(Task task) {
