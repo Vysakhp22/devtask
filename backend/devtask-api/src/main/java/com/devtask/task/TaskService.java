@@ -63,6 +63,11 @@ public class TaskService {
         return mapToResponse(updatedTask);
     }
 
+    public void deleteTask(String taskId) {
+        Task task = findTaskAndVerifyOwnership(taskId);
+        taskRepository.delete(task);
+    }
+
 
     private User getCurrentUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
