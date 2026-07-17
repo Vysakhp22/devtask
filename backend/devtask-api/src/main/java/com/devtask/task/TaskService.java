@@ -40,12 +40,32 @@ public class TaskService {
                 .priority(taskRequest.getPriority())
                 .type(taskRequest.getType())
                 .deadline(taskRequest.getDeadline())
-                .tags(JoinTags(taskRequest.getTags()))
+                .tags(joinTags(taskRequest.getTags()))
                 .user(user)
                 .build();
 
         Task savedTask = taskRepository.save(task);
         return mapToResponse(savedTask);
+    }
+
+    public TaskResponse updateTask(String taskId, TaskRequest taskRequest) {
+        Task task = findTaskAndVerifyOwnership(taskId);
+
+        task.setTitle(taskRequest.getTitle());
+        task.setDescription(taskRequest.getDescription());
+        task.setStatus(taskRequest.getStatus());
+        task.setPriority(taskRequest.getPriority());
+        task.setType(taskRequest.getType());
+        task.setDeadline(taskRequest.getDeadline());
+        task.setTags(joinTags(taskRequest.getTags()));
+
+        Task updatedTask = taskRepository.save(task);
+        return mapToResponse(updatedTask);
+    }
+
+    public void deleteTask(String taskId) {
+        Task task = findTaskAndVerifyOwnership(taskId);
+        taskRepository.delete(task);
     }
 
 
@@ -61,7 +81,7 @@ public class TaskService {
         return Arrays.asList(tags.split(","));
     }
 
-    private String JoinTags(List<String> tags) {
+    private String joinTags(List<String> tags) {
         if (tags == null || tags.isEmpty()) {
             return "";
         }
