@@ -24,7 +24,7 @@ public class TaskService {
         return tasks.stream().map(this::mapToResponse).collect(Collectors.toList());
     }
 
-    private TaskResponse getTaskById(String taskId) {
+    public TaskResponse getTaskById(String taskId) {
         Task task = findTaskAndVerifyOwnership(taskId);
         return mapToResponse(task);
     }
