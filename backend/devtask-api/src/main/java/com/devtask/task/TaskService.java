@@ -68,6 +68,16 @@ public class TaskService {
         taskRepository.delete(task);
     }
 
+    // ── SEARCH TASKS ──────────────────────────────────────────────────────
+    public List<TaskResponse> searchTasks(String keyword) {
+        User user = getCurrentUser();
+
+        return taskRepository.searchByTitle(user.getId(), keyword)
+                .stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
 
     private User getCurrentUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
