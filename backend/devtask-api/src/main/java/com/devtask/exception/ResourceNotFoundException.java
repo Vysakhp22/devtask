@@ -8,11 +8,11 @@ public class ResourceNotFoundException extends ApiException {
         super(errorCode, HttpStatus.NOT_FOUND, message);
     }
 
-    public ResourceNotFoundException task(String taskId) {
+    public static ResourceNotFoundException task(String taskId) {
         return new ResourceNotFoundException(ErrorCode.TASK_NOT_FOUND, "No task found with id: " + taskId);
     }
 
-    public ResourceNotFoundException user(String email) {
+    public static ResourceNotFoundException user(String email) {
         return new ResourceNotFoundException(ErrorCode.USER_NOT_FOUND, "No user found with email: " + email);
     }
 }
