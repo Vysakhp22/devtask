@@ -1,5 +1,7 @@
 package com.devtask.exception;
 
+import org.springframework.http.HttpStatus;
+
 import java.util.Map;
 
 /**
@@ -14,8 +16,8 @@ public class ValidationException extends ApiException {
 
     private final Map<String, String> fieldErrors;
 
-    public ValidationException(Map<String, String> fieldErrors) {
-        super(ErrorCode.VALIDATION_FAILED, org.springframework.http.HttpStatus.BAD_REQUEST, "Validation failed");
+    public ValidationException(String message, Map<String, String> fieldErrors) {
+        super(ErrorCode.VALIDATION_FAILED, HttpStatus.BAD_REQUEST, message);
         this.fieldErrors = fieldErrors;
     }
 
