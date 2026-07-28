@@ -1,5 +1,6 @@
 package com.devtask.task;
 
+import com.devtask.exception.ResourceNotFoundException;
 import com.devtask.task.dto.TaskRequest;
 import com.devtask.task.dto.TaskResponse;
 import com.devtask.user.User;
@@ -81,7 +82,7 @@ public class TaskService {
 
     private User getCurrentUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+        return userRepository.findByEmail(email).orElseThrow(() -> ResourceNotFoundException.user(email));
     }
 
     private List<String> splitTags(String tags) {
@@ -102,10 +103,10 @@ public class TaskService {
         User user = getCurrentUser();
 
         Task task = taskRepository.findById(taskId)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> ResourceNotFoundException.task(taskId));
 
         if (!task.getUser().getId().equals(user.getId())) {
-            throw new RuntimeException("You do not have permission to access this task");
+            throw ResourceNotFoundException.task(taskId);
         }
 
         return task;

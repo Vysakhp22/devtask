@@ -3,6 +3,8 @@ package com.devtask.auth;
 import com.devtask.auth.dto.AuthResponse;
 import com.devtask.auth.dto.LoginRequest;
 import com.devtask.auth.dto.RegisterRequest;
+import com.devtask.exception.DuplicateResourceException;
+import com.devtask.exception.ResourceNotFoundException;
 import com.devtask.security.JwtService;
 import com.devtask.user.User;
 import com.devtask.user.UserRepository;
@@ -24,7 +26,7 @@ public class AuthService {
     // ── REGISTER ─────────────────────────────────────────────────────────
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email is already Registered");
+            throw DuplicateResourceException.email(request.getEmail());
         }
 
         User user = User.builder()
@@ -54,7 +56,7 @@ public class AuthService {
 
         User user = userRepository
                 .findByEmail(loginRequest.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> ResourceNotFoundException.user(loginRequest.getEmail()));
 
         String token = jwtService.generateToken(user.getEmail());
 
