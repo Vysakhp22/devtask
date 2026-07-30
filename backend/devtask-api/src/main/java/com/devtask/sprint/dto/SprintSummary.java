@@ -11,16 +11,9 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SprintStatsResponse {
-
+public class SprintSummary {
     private LocalDate startDate;
     private LocalDate endDate;
     private int totalTasks;
     private int completedTasks;
-    private int inProgressTasks;
-    private int todoTasks;
-    private double percentComplete;
-    private int daysLeft;
-    private double pace;
-    private String status; // "ON_TRACK", "BEHIND", "AHEAD"
 }
