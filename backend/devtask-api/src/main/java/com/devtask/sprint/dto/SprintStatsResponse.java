@@ -5,12 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class SprintStatsResponse {
 
+    private LocalDate startDate;
+    private LocalDate endDate;
     private int totalTasks;
     private int completedTasks;
     private int inProgressTasks;
